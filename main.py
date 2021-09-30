@@ -18,7 +18,11 @@ uiq_measures = {}
 scale_percent = 100 # percent of original img size
 
 data_dir = 'assets/test'
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> 48430f1a59ec9c9efe8bfb4724fb6e156873333d
 for file in os.listdir(data_dir):
     img_path = os.path.join(data_dir, file)
     data_img = cv2.imread(img_path)
