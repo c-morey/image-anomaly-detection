@@ -211,5 +211,8 @@ metric = "ergas"
 # rmse, ssim, sre, psnr, fsim, sam, uiq, issm
 # mse, uqi, ergas, scc, rase, msssim, vifp
     
-compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 0 )
-compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 5 )
+# compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 0 )
+# compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 5 )
+
+def fake():
+    print(1)

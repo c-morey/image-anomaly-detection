@@ -30,15 +30,31 @@ from matplotlib import pyplot as plt
 
 # plt.imshow(thresh1)
 # plt.show()
+kernel_size = 4
 
-img = cv2.imread('assets/anomalous_dice/1/img_17450_cropped.jpg')
+
+img = cv2.imread('assets/5/Anomalous dice/img_17829_cropped.jpg')
+ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+
+plt.imshow(thresh1)
+plt.show()
+
+img = cv2.imread('assets/5/Anomalous dice/img_17829_cropped.jpg')
+# kernel = np.ones((kernel_size,kernel_size),np.uint8)
+# img = cv2.dilate(img,kernel,iterations = 1)
+
+kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+im = cv2.filter2D(img, -1, kernel)
+
 ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 
 
 plt.imshow(thresh1)
 plt.show()
 
-img = cv2.imread('assets/normal_dice/6/651.jpg')
+img = cv2.imread('assets/5/Normal dice/655.jpg')
+kernel = np.ones((kernel_size,kernel_size),np.uint8)
+img = cv2.dilate(img,kernel,iterations = 1)
 ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 
 
