@@ -1,6 +1,6 @@
 import sys
-from .module.cumulative_images import cumulative_images
-from .module.find_defect import find_defect
+from module.cumulative_images import cumulative_images
+from module.find_defect import find_defect
 
 def run():
     modules = {

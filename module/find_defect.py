@@ -3,10 +3,10 @@ import numpy as np
 from numpy import asarray
 from pathlib import Path
 import matplotlib.pyplot as plt
-from ..config import thresholds
+from config import thresholds
 
 def find_defect(arguments):
-
+    
     #Check the arguments--------------------
     options = ['train','detect']
     if len(arguments)<2:

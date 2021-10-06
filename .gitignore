@@ -1,4 +1,9 @@
 env
+<<<<<<< HEAD
 assets
 __pycache__
 .vscode
+=======
+.vscode
+__pycache__
+>>>>>>> import resolve
