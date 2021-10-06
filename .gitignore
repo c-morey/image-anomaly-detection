@@ -1,2 +1,4 @@
 env
 assets
+__pycache__
+.vscode

@@ -39,7 +39,11 @@ def execute_pre_process(img, pre_process_steps, kernel):
         if steps == "dilate":
             img = cv2.dilate(img,kernel,iterations = 1)
         elif steps == "black_white":
-            ret,img = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+            ret,img = cv2.threshold(img,140,255,cv2.THRESH_BINARY)
+        elif steps == "Morphological_Gradient":
+            img = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel)
+        elif steps == "erode":
+            img = cv2.erode(img,kernel,iterations = 1)
     
     return img
 
@@ -71,6 +75,8 @@ def calculate_similarity(test_img_path, kernel_size, data_dir, pre_process_steps
     max_array.append(list(ssim_max.values())[0])
     min_array.append(list(ssim_min.values())[0])
 
+    # max_array.append(list((ssim_max, test_img_path)))
+    # min_array.append(list((ssim_min, test_img_path)))
 
 def classify_die(test_img_path, data_dir):
     
@@ -177,8 +183,14 @@ def classify_die(test_img_path, data_dir):
 
 def compare_anomalous_with_normal(metric_name, pre_process_steps, kernel_size, dice_number):
     
+    # print(max_array)
+    # print(min_array)
+    max_array.clear()
+    min_array.clear()
+    # print(max_array)
+    # print(min_array)
     normal_dice_folder = 'assets/normal_dice/' + str(dice_number)
-    anomalous_dice_folder = 'assets/anomalous_dice/' + str((dice_number+1))
+    anomalous_dice_folder = 'assets/anomalous_dice/' + str(dice_number)
     
     for file in os.listdir(normal_dice_folder):
         calculate_similarity(os.path.join(normal_dice_folder, file), kernel_size, normal_dice_folder, pre_process_steps, metric_name)
@@ -190,15 +202,22 @@ def compare_anomalous_with_normal(metric_name, pre_process_steps, kernel_size, d
     print("min_array min : " + str(min(min_array)))
     print("min_array max : " + str(max(min_array)))
     
+    # print(max_array)
+    # print(min_array)
+    
     max_array.clear()
     min_array.clear()
     
     for file in os.listdir(anomalous_dice_folder):
         anomalous_die_path = os.path.join(anomalous_dice_folder, file)
         die_class = classify_die(anomalous_die_path, "assets/normal_dice/classification")
-        calculate_similarity(anomalous_die_path, kernel_size, os.path.join("assets/normal_dice", die_class), pre_process_steps, metric_name)
+        if anomalous_die_path == "assets/anomalous_dice/0/img_17450_cropped.jpg" or anomalous_die_path == "assets/anomalous_dice/6/img_17829_cropped.jpg":
+            calculate_similarity(anomalous_die_path, kernel_size, os.path.join("assets/normal_dice", die_class), pre_process_steps, metric_name)
 
     print("---------------Anomalous dice---------------")
+    
+    # print(max_array)
+    # print(min_array)
     
     print("max_array min : " + str(min(max_array)))
     print("max_array max : " + str(max(max_array)))
@@ -206,13 +225,12 @@ def compare_anomalous_with_normal(metric_name, pre_process_steps, kernel_size, d
     print("min_array max : " + str(max(min_array)))
 
 pre_process_steps = ["black_white"]
-kernel_size = 4
-metric = "ergas"
+kernel_size = 2
+metric = "mse"
+# unsharp_mask()
+
 # rmse, ssim, sre, psnr, fsim, sam, uiq, issm
 # mse, uqi, ergas, scc, rase, msssim, vifp
     
 # compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 0 )
-# compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 5 )
-
-def fake():
-    print(1)
+# compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 6 )
