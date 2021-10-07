@@ -44,6 +44,10 @@ def execute_pre_process(img, pre_process_steps, kernel):
             img = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel)
         elif steps == "erode":
             img = cv2.erode(img,kernel,iterations = 1)
+        elif steps == "test":
+            kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+            img = cv2.dilate(img,kernel,iterations = 1)
+            ret,img = cv2.threshold(img,140,255,cv2.THRESH_BINARY)
     
     return img
 
@@ -224,7 +228,7 @@ def compare_anomalous_with_normal(metric_name, pre_process_steps, kernel_size, d
     print("min_array min : " + str(min(min_array)))
     print("min_array max : " + str(max(min_array)))
 
-pre_process_steps = ["black_white"]
+pre_process_steps = ["test"]
 kernel_size = 2
 metric = "mse"
 # unsharp_mask()
@@ -233,4 +237,4 @@ metric = "mse"
 # mse, uqi, ergas, scc, rase, msssim, vifp
     
 # compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 0 )
-# compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 6 )
+compare_anomalous_with_normal(metric,pre_process_steps, kernel_size, 6 )
