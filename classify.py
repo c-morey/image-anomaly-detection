@@ -3,7 +3,16 @@ from image_similarity_measures.quality_metrics import ssim
 import os
 
 
-def calc_closest_val(dict, checkMax):
+def calc_closest_val(dict: dict, checkMax: bool) -> dict:
+    """We use this function to check for the similarity score
+
+    Args:
+        dict ([type]): a dictionary of all similarity score
+        checkMax ([type]): bool to specify if we need to return max or min
+
+    Returns:
+        min or max from a dictionary depending of the value of checkMax
+    """
     result = {}
     if (checkMax):
         closest = max(dict.values())
@@ -17,8 +26,16 @@ def calc_closest_val(dict, checkMax):
     return result
 
 
-def classify_die(img_path: str):
+def classify_die(img_path: str) -> str:
+    """ We use this function to know which type of die we deal with and what
+    is the reference folder for the algorithm
 
+    Args:
+        img_path (str)
+
+    Returns:
+        str: the type of die (a number between 0 and 10)
+    """
     data_dir = "data/normal_dice/classification"
     similarity = {}
 
