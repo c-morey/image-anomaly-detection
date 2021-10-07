@@ -1,27 +1,14 @@
-import sys
 import numpy as np
 from numpy import asarray
 from pathlib import Path
 import cv2
 import matplotlib.pyplot as plt
 
-def cumulative_images(arguments):
+def cumulative_images():
 
-    options = {
-        'defect': 'anomalous_dice',
-        'std': 'normal_dice',
-        'all': ''
-    }
-    
-    if len(arguments)<2:
-        all_options = ", ".join(list(options.keys()))
-        print("2 argumets are required: the option and die number (between 0 and 10)")
-        print(f'List of options available: {all_options}')
-        sys.exit()
-
-    option = arguments[0]
-    face_number = arguments[1]
-    DATA_PATH = Path(f"image-anomaly-detection/data/{options[option]}/{face_number}")
+    # face number will be the result of dice number similarity function output
+    face_number = 1
+    DATA_PATH = Path(f"/Users/cerenmorey/image-anomaly-detection/data/normal_dice/{face_number}")
     print(DATA_PATH)
     cumulative_img = np.zeros((128,128))
 
@@ -71,4 +58,5 @@ def cumulative_images(arguments):
     cumulative_mask = (cumulative_mask < 1).astype(int)
     print(f"countour_count {init_contour_count+1}")
     cumulative_mask.dump(DATA_PATH.joinpath(f"face_number_{face_number}_contour_{init_contour_count+1}"))
+
 
