@@ -1,5 +1,6 @@
 env
 <<<<<<< HEAD
+<<<<<<< HEAD
 assets
 __pycache__
 .vscode
@@ -7,3 +8,7 @@ __pycache__
 .vscode
 __pycache__
 >>>>>>> import resolve
+=======
+.vscode
+__pycache__
+>>>>>>> 0805cc33799f9fff542326d9f74fe97bd431dcc0
