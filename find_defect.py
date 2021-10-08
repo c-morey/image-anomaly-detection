@@ -3,18 +3,17 @@ from numpy import asarray
 from pathlib import Path
 import matplotlib.pyplot as plt
 from config import thresholds
+import os
 
 def find_defect():
 
     #this variable willl be the outcome of dice number detection function
-    face_number = 0
+    face_number = 1
 
-    DATA_PATH = Path(f"/Users/cerenmorey/image-anomaly-detection/data/normal_dice/{face_number}")
-    print(DATA_PATH)
+    DATA_PATH = Path(f"/Users/cerenmorey/image-anomaly-detection/data/test/{face_number}")
     results = {}
     defect_list = {'avg':[],'std':[]}
     statistics = ['avg','std']
-    margin= [0.98,1.02]
 
     #loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):
@@ -29,16 +28,15 @@ def find_defect():
             mask = (mask == 0).astype(int)
             mx = np.ma.masked_array(data, mask=mask)
 
-            # plt.imshow(mx)
-            # plt.show()
             
             if contour_number not in results:
                 results[contour_number] = {'std':[],'avg':[]}
-            
+
             results[contour_number]['avg'].append(mx.mean())
             results[contour_number]['std'].append(mx.std())
+            if dice_img.name == '87.jpg':
+                print(mx.mean(), mx.std())
 
-            #if option != "train":
             for stat in statistics:
                 LL = thresholds[face_number][stat][contour_number][0]
                 UL = thresholds[face_number][stat][contour_number][1]
@@ -56,23 +54,17 @@ def find_defect():
     contour_count = len(results.keys())
     col = 0
     _, axs = plt.subplots(contour_count, 2)
-    print(f"{face_number}:{{")
     for stat in statistics:
-        print(f"    '{stat}':{{")
         for contour in range(contour_count):
-            print(f" {contour+1}:{round(min(results[contour+1][stat])*margin[0],2),round(max(results[contour+1][stat])*margin[1],2)},")
-            axs[contour,col].plot(results[contour+1][stat])
-
-            LL = thresholds[face_number][stat][contour+1][0]*margin[0]
-            UL = thresholds[face_number][stat][contour+1][1]*margin[1]
+            axs[contour, col].plot(results[contour + 1][stat])
+            LL = thresholds[face_number][stat][contour+1][0]
+            UL = thresholds[face_number][stat][contour+1][1]
             axs[contour,col].hlines(LL,0,len(results[contour+1][stat]))
             axs[contour,col].hlines(UL,0,len(results[contour+1][stat]))
             axs[contour,col].set_title(f'Contour {contour+1} {stat}')
-        print("    },")
         col =+ 1
-    print("},")
-    
-    plt.show()
+
+    plt.show(block=True)
 
     #Show the detected defective images----------------
     for stat in statistics:
@@ -80,6 +72,10 @@ def find_defect():
             print(f"{len(defect_list[stat])} defects found in {stat} list")
             for defect in defect_list[stat]:
                 print(defect)
+                def_img = plt.imread(f"/Users/cerenmorey/image-anomaly-detection/data/test/{face_number}/{defect}")
+                plt.imshow(def_img)
+                plt.show(block=True)
         else:
             print(f"No defects found with {stat}")
 
+find_defect()
