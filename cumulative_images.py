@@ -3,12 +3,13 @@ from numpy import asarray
 from pathlib import Path
 import cv2
 import matplotlib.pyplot as plt
+from PIL import Image
 
 def cumulative_images():
 
     # face number will be the result of dice number similarity function output
     face_number = 1
-    DATA_PATH = Path(f"/Users/cerenmorey/image-anomaly-detection/data/normal_dice/{face_number}")
+    DATA_PATH = Path(f"data/normal_dice/{face_number}")
     print(DATA_PATH)
     cumulative_img = np.zeros((128,128))
 
@@ -24,6 +25,9 @@ def cumulative_images():
     plt.imshow(cumulative_img)
     plt.show()
 
+    im = Image.fromarray((cumulative_img * 255).astype(np.uint8))
+    im.save(f"data/normal_dice/Contour/{face_number}_cumulative.jpg")
+    
     #the type of numpy array need to be converted to be used by cv2
     cumulative_img = cumulative_img.astype(np.uint8)
     #We crate an empty image same size as cumulative image for masking later
@@ -40,6 +44,9 @@ def cumulative_images():
     with_contours = cv2.drawContours(cumulative_img, contours, -1,(255,0,255),1)
     plt.imshow(with_contours)
     plt.show()
+    
+    im = Image.fromarray((with_contours * 255).astype(np.uint8))
+    im.save(f"data/normal_dice/Contour/{face_number}_cumulative_with_contours.jpg")
 
     for cnt in contours:
         print(f"countour_count {contour_count}")
@@ -60,3 +67,4 @@ def cumulative_images():
     cumulative_mask.dump(DATA_PATH.joinpath(f"face_number_{face_number}_contour_{init_contour_count+1}"))
 
 
+cumulative_images()
