@@ -77,5 +77,3 @@ def find_defect():
                 plt.show(block=True)
         else:
             print(f"No defects found with {stat}")
-
-find_defect()

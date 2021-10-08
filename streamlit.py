@@ -35,10 +35,10 @@ st.sidebar.markdown("Use this panel to explore the details of images, and find t
 st.sidebar.subheader('Create Cumulative Images')
 st.sidebar.markdown("Choose the images you want to create a cumulative image.")
 # uploaded_file = st.file_uploader("Please upload your images here",type=['png','jpeg', 'jpg'])
-uploaded_files = st.file_uploader("Choose a CSV file", accept_multiple_files=True)
+# uploaded_files = st.file_uploader("Choose a CSV file", accept_multiple_files=True)
 
-if st.button('test'):
-    process(uploaded_files)
+# if st.button('test'):
+#     process(uploaded_files)
 
 if st.button('train'):
     cumulative_images()
