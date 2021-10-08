@@ -10,8 +10,8 @@ def cumulative_images():
 
     # face number will be the result of dice number similarity function output
     face_number = 1
-    DATA_PATH = Path(f"/Users/cerenmorey/image-anomaly-detection/data/train/{face_number}")
-    mask_path = Path(f"/Users/cerenmorey/image-anomaly-detection/data/test/{face_number}")
+    DATA_PATH = Path(f"data/train/{face_number}")
+    mask_path = Path(f"data/test/{face_number}")
     print(DATA_PATH)
     cumulative_img = np.zeros((128,128))
 
