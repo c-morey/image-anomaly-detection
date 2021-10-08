@@ -77,3 +77,8 @@ def find_defect():
                 plt.show(block=True)
         else:
             print(f"No defects found with {stat}")
+<<<<<<< HEAD
+=======
+
+find_defect()
+>>>>>>> 0805cc33799f9fff542326d9f74fe97bd431dcc0
