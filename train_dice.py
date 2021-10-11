@@ -3,19 +3,18 @@ from numpy import asarray
 from pathlib import Path
 import matplotlib.pyplot as plt
 from config import thresholds
-import os
 
 
 def train_dice():
 
     # this variable will be the outcome of dice number detection function
-    face_number = 1
+    face_number = 9
 
-    DATA_PATH = Path(f"/Users/cerenmorey/image-anomaly-detection/data/train/{face_number}")
+    DATA_PATH = Path(f"data/train/{face_number}")
     print(DATA_PATH)
     results = {}
     statistics = ['avg', 'std']
-    margin= [0.98,1.02]
+    margin= [0.5,1.50]
 
     # loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):
@@ -43,12 +42,28 @@ def train_dice():
     # Print the results and plot--------------
     contour_count = len(results.keys())
     col = 0
+    X_sigma = 1
     _, axs = plt.subplots(contour_count, 2)
     print(f"{face_number}:{{")
     for stat in statistics:
         print(f" '{stat}':{{")
         for contour in range(contour_count):
             print(f" {contour + 1}:{round(min(results[contour + 1][stat]) * margin[0], 2), round(max(results[contour + 1][stat]) * margin[1], 2)},")
+
+            #all_data = results[contour + 1][stat]
+            #with X sigma from average -- this is an option to set a margin
+            #print(f" {contour + 1}:{np.mean(all_data) - X_sigma * np.std(all_data), np.mean(all_data) + X_sigma * np.std(all_data)},")
+
+            #absolute value - this is an option to set a margin
+            # abs_min_avg = 0
+            # abs_max_avg = 0
+            # abs_min_std = 10
+            # abs_max_std = 5
+            # if stat == 'std':
+            #     print(f" {contour + 1}:{min(all_data) - abs_min_std, max(all_data) + abs_max_std},")
+            # else:
+            #     print(f" {contour + 1}:{min(all_data) - abs_min_avg, max(all_data) + abs_max_avg},")
+
             axs[contour, col].plot(results[contour + 1][stat])
             axs[contour, col].set_title(f'Contour {contour + 1} {stat}')
         print("    },")
