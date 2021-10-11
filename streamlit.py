@@ -1,32 +1,32 @@
 import streamlit as st
 from PIL import Image
-<<<<<<< HEAD
 from cumulative_images import cumulative_images
-from find_defect import find_defect
+from find_defect import find_defect, is_defect
 
-@st.cache(allow_output_mutation=True)
-def createExtractor():
-     return cumulative_images(), find_defect()
-
-def process(uploaded_files):
-    i=1
-    for uploaded_file in uploaded_files:
-        my_expander = st.expander(label=uploaded_file.name)
-        my_expander.write('Hello there!')
-        clicked = my_expander.button('Click me!', key=i)
-        i+=1
-    
-# workExpExtractor, sectionExtractor = createExtractor()
-=======
-from module.cumulative_images import cumulative_images
-from module.find_defect import find_defect
 
 @st.cache(allow_output_mutation=True)
 def createExtractor():
     return cumulative_images(), find_defect()
 
-workExpExtractor, sectionExtractor = createExtractor()
->>>>>>> 0805cc33799f9fff542326d9f74fe97bd431dcc0
+
+def process(uploaded_files):
+    print(uploaded_files)
+    for uploaded_file in uploaded_files:
+        bytes_data = uploaded_file.read()
+        print(bytes_data)
+        expander_title = uploaded_file.name
+        if is_defect(bytes_data):
+            expander_title += " - Anomalous die"
+        else:
+            expander_title += " - Correct die"
+
+        my_expander = st.expander(label=expander_title)
+        image = Image.open(uploaded_file)
+        my_expander.image(image)
+        # my_expander.write(Image.open(uploaded_file.read()))
+
+
+# workExpExtractor, sectionExtractor = createExtractor()
 
 #st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title("Image Anomaly Detection App")
@@ -34,13 +34,8 @@ st.markdown( "This app aims to detect **anomaly dice images.**")
 st.markdown("For more info: [Check GitHub](https://github.com/c-morey/image-anomaly-detection)")
 
 # Main page image
-<<<<<<< HEAD
 # img = Image.open("./streamlit_images/st_dice_image.png")
 # st.image(img)
-=======
-img = Image.open("./streamlit_images/st_dice_image.png")
-st.image(img)
->>>>>>> 0805cc33799f9fff542326d9f74fe97bd431dcc0
 
 # Creating a side bar for users to explore
 st.sidebar.markdown("## Side Bar")
@@ -50,19 +45,14 @@ st.sidebar.markdown("Use this panel to explore the details of images, and find t
 # At this step show the contour number and images of how they look like
 st.sidebar.subheader('Create Cumulative Images')
 st.sidebar.markdown("Choose the images you want to create a cumulative image.")
-<<<<<<< HEAD
-# uploaded_file = st.file_uploader("Please upload your images here",type=['png','jpeg', 'jpg'])
+uploaded_files = st.file_uploader("Please upload your images here",type=['png','jpeg', 'jpg'], accept_multiple_files=True)
 # uploaded_files = st.file_uploader("Choose a CSV file", accept_multiple_files=True)
 
-# if st.button('test'):
-#     process(uploaded_files)
+if st.button('test'):
+    process(uploaded_files)
 
-if st.button('train'):
-    cumulative_images()
-=======
-uploaded_file = st.file_uploader("Please upload your images here",type=['png','jpeg', 'jpg'])
-
->>>>>>> 0805cc33799f9fff542326d9f74fe97bd431dcc0
+# if st.button('train'):
+#     cumulative_images()
 
 # Show the matplotlib viz of avg and std - its before setting the final margin
 st.sidebar.subheader('Train the Images')

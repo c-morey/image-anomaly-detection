@@ -2,6 +2,8 @@ import cv2
 from image_similarity_measures.quality_metrics import ssim
 import os
 
+import numpy as np
+
 
 def calc_closest_val(dict: dict, checkMax: bool) -> dict:
     """We use this function to check for the similarity score
@@ -26,7 +28,7 @@ def calc_closest_val(dict: dict, checkMax: bool) -> dict:
     return result
 
 
-def classify_die(img_path: str) -> str:
+def classify_die(img) -> str:
     """ We use this function to know which type of die we deal with and what
     is the reference folder for the algorithm
 
@@ -39,13 +41,14 @@ def classify_die(img_path: str) -> str:
     data_dir = "data/normal_dice/classification"
     similarity = {}
 
-    test_img = cv2.imread(img_path)
+    # test_img = cv2.imread(img_path)
 
     for file in os.listdir(data_dir):
         classification_img_path = os.path.join(data_dir, file)
-        if img_path != classification_img_path:
-            data_img = cv2.imread(classification_img_path)
-            similarity[classification_img_path] = ssim(test_img, data_img)
+        # if img_path != classification_img_path:
+        data_img = cv2.imread(classification_img_path)
+        data_img = np.mean(data_img, axis=2)
+        similarity[classification_img_path] = ssim(img, data_img)
 
     similarity_max = calc_closest_val(similarity, True)
 
