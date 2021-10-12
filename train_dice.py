@@ -14,7 +14,7 @@ def train_dice():
     print(DATA_PATH)
     results = {}
     statistics = ['avg', 'std']
-    margin= [0.98,1.02]
+    margin = [0.98, 1.02]
 
     # loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):
@@ -73,4 +73,4 @@ def train_dice():
     plt.show(block=True)
 
 
-train_dice()
+# train_dice()
