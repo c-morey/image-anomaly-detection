@@ -16,7 +16,7 @@ This repository provides 2 approaches to detect anomalies within an image datase
   - find_defect.py: This file is the last step to detect the anomalies. With numpy masking method, it will measure each contours' standard deviation and average and compare if they are within given threshold and magin. If not, they are outputted as an anomaly.
 
 **2. Isolation Forest**
-  - isolation_forest.py : Isolation Forest is an outlier detection technique that identifies anomalies instead of normal observations. The advantage of it is that it can be scaled up to handle large, high-dimensional datasets.
+  - isolationforest.py : Isolation Forest is an outlier detection technique that identifies anomalies instead of normal observations. The advantage of it is that it can be scaled up to handle large, high-dimensional datasets.
 
 
 ### Prerequisites
