@@ -8,10 +8,6 @@ import matplotlib.pyplot as plt
 def cumulative_images(face_number: int):
 
     # face number will be the result of dice number similarity function output
-<<<<<<< HEAD
-=======
-    face_number = 4
->>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
     DATA_PATH = Path(f"data/train/{face_number}")
     mask_path = Path(f"data/test/{face_number}")
     cumulative_img = np.zeros((128, 128))
@@ -50,7 +46,7 @@ def cumulative_images(face_number: int):
         contour_count -= 1
 
     cumulative_mask = (cumulative_mask < 1).astype(int)
-
+    print(DATA_PATH.joinpath(f"face_number_{face_number}_contour_{init_contour_count + 1}"))
     cumulative_mask.dump(DATA_PATH.joinpath(f"face_number_{face_number}_contour_{init_contour_count + 1}"))
     cumulative_mask.dump(mask_path.joinpath(f"face_number_{face_number}_contour_{init_contour_count+1}"))
 

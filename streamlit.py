@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-from cumulative_images import generate_all_cumulative_images
 from find_defect import is_defect
 
 
@@ -35,11 +34,11 @@ st.sidebar.markdown("## Side Bar")
 st.sidebar.markdown("Use this panel to explore the details of images, and find the defected ones.")
 
 # At this step show the contour number and images of how they look like
-st.sidebar.subheader('Create Cumulative Images')
-st.sidebar.markdown("Choose the images you want to create a cumulative image.")
+# st.sidebar.subheader('Create Cumulative Images')
+# st.sidebar.markdown("Choose the images you want to create a cumulative image.")
 uploaded_files = st.file_uploader("Please upload your images here", type=['png', 'jpeg', 'jpg'], accept_multiple_files=True)
-if st.sidebar.button('Generate Cumulative Images'):
-    generate_all_cumulative_images()
+# if st.sidebar.button('Generate Cumulative Images'):
+#     generate_all_cumulative_images()
 
 # Final step -- show the image with final margin matplotlib and the name of the folders found as anomaly
 st.sidebar.subheader('Detect Anomalies')

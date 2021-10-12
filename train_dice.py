@@ -13,9 +13,6 @@ def train_dice():
     print(DATA_PATH)
     results = {}
     statistics = ['avg', 'std']
-<<<<<<< HEAD
-    margin = [0.98, 1.02]
-=======
     if face_number == 3:
         margin = [0.78,1.22]
     elif face_number == 4:
@@ -28,7 +25,6 @@ def train_dice():
         margin = [0.79, 1.21]
     else:
         margin = [0.98,1.02]
->>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
 
     # loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):
