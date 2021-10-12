@@ -8,13 +8,13 @@ from config import thresholds
 def train_dice():
 
     # this variable will be the outcome of dice number detection function
-    face_number = 9
+    face_number = 0
 
     DATA_PATH = Path(f"data/train/{face_number}")
     print(DATA_PATH)
     results = {}
     statistics = ['avg', 'std']
-    margin= [0.5,1.50]
+    margin= [0.98,1.02]
 
     # loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):
