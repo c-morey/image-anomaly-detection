@@ -3,12 +3,12 @@ import pickle
 face_number = 8
 
 # load the evaluation matrix created on find_defect function
-with open (f"counter_{face_number}", "rb") as h:
+with open(f"counter_{face_number}", "rb") as h:
     counter = pickle.load(h)
 
-TP = counter.get("TP") # true positive
-FP = counter.get("FP") # false positive
-FN = counter.get("FN") # false negative
+TP = counter.get("TP")  # true positive
+FP = counter.get("FP")  # false positive
+FN = counter.get("FN")  # false negative
 
 precision = TP/(TP+FP)
 recall = TP / (TP+FN)

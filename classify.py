@@ -1,7 +1,6 @@
 import cv2
 from image_similarity_measures.quality_metrics import ssim
 import os
-
 import numpy as np
 
 
@@ -41,11 +40,8 @@ def classify_die(img) -> str:
     data_dir = "data/normal_dice/classification"
     similarity = {}
 
-    # test_img = cv2.imread(img_path)
-
     for file in os.listdir(data_dir):
         classification_img_path = os.path.join(data_dir, file)
-        # if img_path != classification_img_path:
         data_img = cv2.imread(classification_img_path)
         data_img = np.mean(data_img, axis=2)
         similarity[classification_img_path] = ssim(img, data_img)

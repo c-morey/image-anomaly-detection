@@ -1,32 +1,33 @@
 import numpy as np
 from numpy import asarray
 from pathlib import Path
-import pickle
 import matplotlib.pyplot as plt
 from classify import classify_die
 from config import thresholds
-import os
-from PIL import Image
 from cv2 import imdecode
 
 
+<<<<<<< HEAD
+def find_defect(face_number):
+=======
 def find_defect():
 
     #this variable willl be the outcome of dice number detection function
     face_number = 8
+>>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
 
     DATA_PATH = Path(f"data/test/{face_number}")
-    counter = {"TP":0 , "FN":0, "TN":0, "FP":0}
+    counter = {"TP": 0, "FN": 0, "TN": 0, "FP": 0}
     results = {}
-    defect_list = {'avg':[],'std':[]}
-    statistics = ['avg','std']
+    defect_list = {'avg': [], 'std': []}
+    statistics = ['avg', 'std']
 
-    #loop over images ------------
+    # loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):
         print(f"Processing {dice_img.name} from face number {face_number}")
         image = plt.imread(dice_img)
         data = asarray(image)
-        
+
         for contour in dice_img.parent.glob("**/face_number_*"):
             print(contour)
             contour_number = int(contour.name.split("_")[-1])
@@ -34,13 +35,11 @@ def find_defect():
             mask = (mask == 0).astype(int)
             mx = np.ma.masked_array(data, mask=mask)
 
-            
             if contour_number not in results:
-                results[contour_number] = {'std':[],'avg':[]}
+                results[contour_number] = {'std': [], 'avg': []}
 
             results[contour_number]['avg'].append(mx.mean())
             results[contour_number]['std'].append(mx.std())
-
 
             for stat in statistics:
                 LL = thresholds[face_number][stat][contour_number][0]
@@ -54,7 +53,6 @@ def find_defect():
                 if value < LL or value > UL:
                     if dice_img.name not in defect_list[stat]:
                         defect_list[stat].append(dice_img.name)
-
 
         # this loop will save the true positive-negatives for evaluation matrix
         detected = False
@@ -75,7 +73,6 @@ def find_defect():
             if not detected:
                 counter["TN"] = counter["TN"] + 1
 
-    #Print the results and plot--------------
     # Print the results and plot--------------
     contour_count = len(results.keys())
     col = 0
@@ -122,7 +119,6 @@ def is_defect(image_bytes):
 
     DATA_PATH = Path(f"data/train/{face_number}")
     results = {}
-    defect_list = {'avg': [], 'std': []}
     statistics = ['avg', 'std']
 
     for contour in DATA_PATH.glob("**/face_number_*"):
@@ -148,6 +144,9 @@ def is_defect(image_bytes):
                 value = mx.std()
 
             if value < LL or value > UL:
+<<<<<<< HEAD
+                return True, face_number
+=======
                 return True
 
     return False
@@ -182,5 +181,6 @@ def is_defect(image_bytes):
             print(f"No defects found with {stat}")
 
 
+>>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
 
-find_defect()
+    return False, face_number
