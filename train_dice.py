@@ -2,19 +2,33 @@ import numpy as np
 from numpy import asarray
 from pathlib import Path
 import matplotlib.pyplot as plt
-from config import thresholds
 
 
 def train_dice():
 
     # this variable will be the outcome of dice number detection function
-    face_number = 0
+    face_number = 8
 
     DATA_PATH = Path(f"data/train/{face_number}")
     print(DATA_PATH)
     results = {}
     statistics = ['avg', 'std']
+<<<<<<< HEAD
     margin = [0.98, 1.02]
+=======
+    if face_number == 3:
+        margin = [0.78,1.22]
+    elif face_number == 4:
+        margin= [0.95,1.05]
+    elif face_number == 5:
+        margin = [0.98, 1.02]
+    elif face_number == 6:
+        margin = [0.93, 1.07]
+    elif face_number == 7:
+        margin = [0.79, 1.21]
+    else:
+        margin = [0.98,1.02]
+>>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
 
     # loop over images ------------
     for dice_img in DATA_PATH.glob(f"**/*.jpg"):

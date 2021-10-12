@@ -7,7 +7,14 @@ from config import thresholds
 from cv2 import imdecode
 
 
+<<<<<<< HEAD
 def find_defect(face_number):
+=======
+def find_defect():
+
+    #this variable willl be the outcome of dice number detection function
+    face_number = 8
+>>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
 
     DATA_PATH = Path(f"data/test/{face_number}")
     counter = {"TP": 0, "FN": 0, "TN": 0, "FP": 0}
@@ -94,6 +101,10 @@ def find_defect(face_number):
         else:
             print(f"No defects found with {stat}")
 
+    # pickling the counter dict to use in evaluation.py
+    with open(f"counter_{face_number}", "wb") as handle:
+        pickle.dump(counter, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 
 def is_defect(image_bytes):
 
@@ -133,6 +144,43 @@ def is_defect(image_bytes):
                 value = mx.std()
 
             if value < LL or value > UL:
+<<<<<<< HEAD
                 return True, face_number
+=======
+                return True
+
+    return False
+
+    # Print the results and plot--------------
+    contour_count = len(results.keys())
+    col = 0
+    _, axs = plt.subplots(contour_count, 2)
+    for stat in statistics:
+        for contour in range(contour_count):
+            axs[contour, col].plot(results[contour + 1][stat])
+            LL = thresholds[face_number][stat][contour+1][0]
+            UL = thresholds[face_number][stat][contour+1][1]
+            axs[contour, col].hlines(LL, 0, len(results[contour+1][stat]))
+            axs[contour, col].hlines(UL, 0, len(results[contour+1][stat]))
+            axs[contour, col].set_title(f'Contour {contour+1} {stat}')
+        col =+ 1
+
+    plt.show(block=True)
+
+    # Show the detected defective images----------------
+    for stat in statistics:
+        if len(defect_list[stat]) != 0:
+            print(f"{len(defect_list[stat])} defects found in {stat} list")
+            for defect in defect_list[stat]:
+                print(defect)
+                def_img = plt.imread(f"data/test/{face_number}/{defect}")
+                def_img = plt.imread(img_path)
+                plt.imshow(def_img)
+                plt.show(block=True)
+        else:
+            print(f"No defects found with {stat}")
+
+
+>>>>>>> 7e7caa90131d5aa5d0d2dd91802d960e57b65018
 
     return False, face_number
