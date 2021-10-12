@@ -13,7 +13,7 @@ from cv2 import imdecode
 def find_defect():
 
     #this variable willl be the outcome of dice number detection function
-    face_number = 1
+    face_number = 8
 
     DATA_PATH = Path(f"data/test/{face_number}")
     counter = {"TP":0 , "FN":0, "TN":0, "FP":0}
@@ -104,6 +104,10 @@ def find_defect():
         else:
             print(f"No defects found with {stat}")
 
+    # pickling the counter dict to use in evaluation.py
+    with open(f"counter_{face_number}", "wb") as handle:
+        pickle.dump(counter, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 
 def is_defect(image_bytes):
 
@@ -176,10 +180,6 @@ def is_defect(image_bytes):
                 plt.show(block=True)
         else:
             print(f"No defects found with {stat}")
-
-    # pickling the counter dict to use in evaluation.py
-    with open(f"counter_{face_number}", "wb") as handle:
-        pickle.dump(counter, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 
