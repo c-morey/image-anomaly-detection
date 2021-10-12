@@ -121,9 +121,9 @@ def is_defect(image_bytes):
                 value = mx.std()
 
             if value < LL or value > UL:
-                return True
+                return True, face_number
 
-    return False
+    return False, face_number
 
     # Print the results and plot--------------
     contour_count = len(results.keys())
@@ -156,5 +156,3 @@ def is_defect(image_bytes):
 
 # print(is_defect("data/normal_dice/1/121.jpg"))
 # find_defect()
-
-find_defect()
