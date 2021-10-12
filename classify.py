@@ -1,7 +1,6 @@
 import cv2
 from image_similarity_measures.quality_metrics import ssim
 import os
-from matplotlib.pyplot import imread
 import numpy as np
 
 
@@ -50,5 +49,3 @@ def classify_die(img) -> str:
     similarity_max = calc_closest_val(similarity, True)
 
     return os.path.split(list(similarity_max.keys())[0])[1].split(".")[0]
-
-print(classify_die(imread("data/test/3/417.jpg")))

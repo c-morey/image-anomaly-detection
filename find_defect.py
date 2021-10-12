@@ -7,10 +7,7 @@ from config import thresholds
 from cv2 import imdecode
 
 
-def find_defect():
-
-    # this variable willl be the outcome of dice number detection function
-    face_number = 1
+def find_defect(face_number):
 
     DATA_PATH = Path(f"data/test/{face_number}")
     counter = {"TP": 0, "FN": 0, "TN": 0, "FP": 0}
