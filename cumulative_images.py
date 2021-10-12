@@ -5,28 +5,21 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-def cumulative_images(face_number):
+def cumulative_images(face_number: int):
 
     # face number will be the result of dice number similarity function output
     DATA_PATH = Path(f"data/train/{face_number}")
     mask_path = Path(f"data/test/{face_number}")
-    print(DATA_PATH)
     cumulative_img = np.zeros((128, 128))
 
-    for dice_img in DATA_PATH.glob(f"**/*.jpg"):
-        print(f"Processing {dice_img.name}")
+    for dice_img in DATA_PATH.glob("**/*.jpg"):
         image = plt.imread(dice_img)
         data = asarray(image)
         data = (data <= 70).astype(int)
         cumulative_img = cumulative_img + data
 
-    plt.imshow(cumulative_img)
-    plt.show(block=True)
-
     # we convert the cumulative mask to a binary array
     cumulative_img = (cumulative_img >= 1).astype(int)
-    plt.imshow(cumulative_img)
-    plt.show(block=True)
 
     # the type of numpy array need to be converted to be used by cv2
     cumulative_img = cumulative_img.astype(np.uint8)
@@ -38,15 +31,9 @@ def cumulative_images(face_number):
     contours, hierarchy = cv2.findContours(cumulative_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     init_contour_count = len(contours)
     contour_count = len(contours)
-    print(f'Detected contours: {contour_count+1}')
-
-    # Countour representation overall
-    with_contours = cv2.drawContours(cumulative_img, contours, -1, (255, 0, 255), 1)
-    plt.imshow(with_contours)
-    plt.show(block=True)
 
     for cnt in contours:
-        print(f"countour_count {contour_count}")
+
         # One mask is made per contour
         single_mask = mask.copy()
         # Extract only the point within the contour
@@ -59,7 +46,7 @@ def cumulative_images(face_number):
         contour_count -= 1
 
     cumulative_mask = (cumulative_mask < 1).astype(int)
-    print(f"countour_count {init_contour_count+1}")
+
     cumulative_mask.dump(DATA_PATH.joinpath(f"face_number_{face_number}_contour_{init_contour_count + 1}"))
     cumulative_mask.dump(mask_path.joinpath(f"face_number_{face_number}_contour_{init_contour_count+1}"))
 
