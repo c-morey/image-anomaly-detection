@@ -1,5 +1,5 @@
 # image-anomaly-detection
-This repository provides 2 approaches to detect anomalies in a given image dataset.
+This repository provides 2 approaches to detect anomalies within an image dataset.
 
 -------------------------------------------------------------------------------
 ### Project Guidelines
